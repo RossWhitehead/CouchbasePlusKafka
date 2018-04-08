@@ -8,27 +8,28 @@ services:
       - "8091-8094:8091-8094"
       - "11210:11210"
     volumes: 
-      - ./data:/opt/couchbase/var
+      - ./server/data:/opt/couchbase/var
     container_name: couchbase  
       
   sync-gateway:
     image: couchbase/sync-gateway:2.0.0-devbuild-enterprise
     ports: 
       - "4984-4985:4984-4985"
-    command: -adminInterface :4985 /etc/sync_gateway/sync_gateway.json
+    command: -adminInterface :4985 /etc/sync-gateway/sync-gateway.json
     volumes: 
-      - ./tmp:/opt/couchbase-sync-gateway/data
-      - ./enders-game-sync.json:/etc/sync_gateway/sync_gateway.json
-    container_name: sync_gateway
+      - ./sync-gateway/data:/opt/couchbase-sync-gateway/data
+      - ./sync-gateway/logs:/var/log/sync_gateway
+      - ./sync-gateway/enders-game-sync.json:/etc/sync-gateway/sync-gateway.json
+    container_name: sync-gateway
     depends_on:
       - couchbase
       - setup-sync-gateway
 
   setup-sync-gateway:
     image: couchbase/sync-gateway:2.0.0-devbuild-enterprise
+    command: '/bin/bash ./usr/local/bin/setup-sync-gateway.sh'
     volumes: 
       - './sync-gateway/setup-sync-gateway.sh:/usr/local/bin/setup-sync-gateway.sh'
-    command: 'bin/bash -c "./usr/local/bin/setup-sync-gateway.sh"'
     container_name: setup-sync-gateway
     depends_on:
       - couchbase   
