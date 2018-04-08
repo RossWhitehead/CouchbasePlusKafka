@@ -11,14 +11,12 @@
           "replicator_2": true
         },
         "bucket": "enders-game-data",
-        "server": "http://localhost:8091",
+        "server": "http://couchbase:8091",
         "enable_shared_bucket_access": true,
         "username": "admin",
         "password": "password",
           "users": {
-            "admin": { "password": "password", "admin_channels": ["*"]},
-            "ollie": { "password": "password" ,"admin_channels":["accounts"]},
-            "tester": {"password": "password"}
+            "admin": { "password": "password", "admin_channels": ["*"]}
         },
         "sync": `
           function sync(doc, oldDoc) {

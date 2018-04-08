@@ -17,5 +17,18 @@ services:
       - "4984-4985:4984-4985"
     command: -adminInterface :4985 /etc/sync_gateway/sync_gateway.json
     volumes: 
+      - ./tmp:/opt/couchbase-sync-gateway/data
       - ./enders-game-sync.json:/etc/sync_gateway/sync_gateway.json
     container_name: sync_gateway
+    depends_on:
+      - couchbase
+      - setup-sync-gateway
+
+  setup-sync-gateway:
+    image: couchbase/sync-gateway:2.0.0-devbuild-enterprise
+    command: '/bin/bash -c /usr/local/bin/setup-sync-gateway.sh'
+    volumes: 
+      - './sync-gateway/setup-sync-gateway.sh:/usr/local/bin/setup-sync-gateway.sh'
+    container_name: setup-sync-gateway
+    depends_on:
+      - couchbase   
