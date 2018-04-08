@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+
+  couchbase:
+    image: couchbase/server:enterprise-5.1.0
+    ports:
+      - "8091-8094:8091-8094"
+      - "11210:11210"
+    volumes: 
+      - ./data:/opt/couchbase/var
+    container_name: couchbase  
+      
+  sync-gateway:
+    image: couchbase/sync-gateway:2.0.0-devbuild-enterprise
+    ports: 
+      - "4984-4985:4984-4985"
+    command: -adminInterface :4985 /etc/sync_gateway/sync_gateway.json
+    volumes: 
+      - ./enders-game-sync.json:/etc/sync_gateway/sync_gateway.json
+    container_name: sync_gateway

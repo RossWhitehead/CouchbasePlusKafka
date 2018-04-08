@@ -1,0 +1,39 @@
+{
+    "interface": ":4984",
+    "log": [
+      "*"
+    ],
+    "databases": {
+      "enders-game-data": { 
+        "import_docs": "continuous",
+        "unsupported": {
+          "enable_extended_attributes": true,
+          "replicator_2": true
+        },
+        "bucket": "enders-game-data",
+        "server": "http://localhost:8091",
+        "enable_shared_bucket_access": true,
+        "username": "admin",
+        "password": "password",
+          "users": {
+            "admin": { "password": "password", "admin_channels": ["*"]},
+            "ollie": { "password": "password" ,"admin_channels":["accounts"]},
+            "tester": {"password": "password"}
+        },
+        "sync": `
+          function sync(doc, oldDoc) {
+            switch(doc.security) {
+              case "public":
+                requireUser("admin");
+                channel("!");
+              break;
+              default:
+                requireUser(doc.name);
+                channel(doc._id);
+                access(doc.name, doc._id); 
+              }
+          }
+      `
+      }
+    }
+  }
