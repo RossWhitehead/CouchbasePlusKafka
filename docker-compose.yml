@@ -26,9 +26,9 @@ services:
 
   setup-sync-gateway:
     image: couchbase/sync-gateway:2.0.0-devbuild-enterprise
-    command: '/bin/bash -c /usr/local/bin/setup-sync-gateway.sh'
     volumes: 
       - './sync-gateway/setup-sync-gateway.sh:/usr/local/bin/setup-sync-gateway.sh'
+    command: 'bin/bash -c "./usr/local/bin/setup-sync-gateway.sh"'
     container_name: setup-sync-gateway
     depends_on:
       - couchbase   
