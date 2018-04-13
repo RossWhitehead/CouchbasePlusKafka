@@ -8,7 +8,7 @@ services:
       - "8091-8094:8091-8094"
       - "11210:11210"
     volumes: 
-      - ./server/data:/opt/couchbase/var
+      - ./server/data:/opt/couchbase/var      
     container_name: couchbase  
       
   sync-gateway:
@@ -32,4 +32,9 @@ services:
       - './sync-gateway/setup-sync-gateway.sh:/usr/local/bin/setup-sync-gateway.sh'
     container_name: setup-sync-gateway
     depends_on:
-      - couchbase   
+      - couchbase
+
+networks:
+  default:
+    external:
+      name: enders-game-net  

@@ -30,8 +30,22 @@
                 channel(doc._id);
                 access(doc.name, doc._id); 
               }
-          }
-      `
+            }
+          `,
+        "event_handlers": {
+            "document_changed": [
+                {
+                    "handler": "webhook",
+                    "url": "http://endersgame-admin/api/Events",
+                    "filter": `function(doc) {
+                      if (doc.type == "event") {
+                          return true;
+                      }
+                      return false;
+                  }`
+                }
+            ]
+        }
       }
     }
   }
