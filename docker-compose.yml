@@ -8,7 +8,8 @@ services:
       - "8091-8094:8091-8094"
       - "11210:11210"
     volumes: 
-      - ./server/data:/opt/couchbase/var      
+      - ./server/data:/opt/couchbase/var  
+    container_name: couchbase      
 
   sync-gateway:
     image: couchbase/sync-gateway:2.0.0-devbuild-enterprise
@@ -133,6 +134,8 @@ services:
       CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: "1"
       CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: "1"
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: "1"
+    volumes:
+        - ./jars:/etc/kafka-connect/jars      
     depends_on:
       - zoo1
       - kafka1
