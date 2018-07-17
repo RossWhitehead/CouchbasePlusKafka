@@ -10,7 +10,7 @@
           "enable_extended_attributes": true,
           "replicator_2": true
         },
-        "bucket": "enders-game-data",
+        "bucket": "default",
         "server": "http://couchbase:8091",
         "enable_shared_bucket_access": true,
         "username": "admin",
@@ -36,7 +36,7 @@
             "document_changed": [
                 {
                     "handler": "webhook",
-                    "url": "http://endersgame-admin/api/Events",
+                    "url": "http://myapp/api/Events",
                     "filter": `function(doc) {
                       if (doc.type == "event") {
                           return true;

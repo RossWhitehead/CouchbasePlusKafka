@@ -1,2 +1,5 @@
-# ignore all file in the data directory
-data/
+# ignore all file in the follwing folders
+server/
+sync-gateway/data/
+sync-gateway/logs/
+kafka-stack/
